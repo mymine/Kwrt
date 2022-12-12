@@ -156,6 +156,10 @@ jobs:
             git checkout bcaabe6d0586fabab72aa1fc6c06b8f83b6dfa0c
         fi
 
+    - name: SSH connection to Actions
+      uses: kiddin9/debugger-action@master
+      if: contains(github.event.action, 'ssh')
+    
     - name: Free up disk space
       env:
         DEBIAN_FRONTEND: noninteractive
