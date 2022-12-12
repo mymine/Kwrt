@@ -148,10 +148,10 @@ jobs:
         else
             git clone $REPO_URL -b ${{ env.REPO_BRANCH }} openwrt
         fi
-        if [ "${{ env.REPO_BRANCH }}" == "ipq807x_ipq60xx" ]; then
+        if [ "${{matrix.target}}" == "ipq807x_ipq60xx" ]; then
             cd openwrt
             git checkout c67509efd7d0c43eb3f622f06c8a31aa28d22f6e
-        elif [ "${{ env.REPO_BRANCH }}" == "mediatek_gl_mt7981" ]; then
+        elif [ "${{matrix.target}}" == "mediatek_gl_mt7981" ]; then
             cd openwrt
             git checkout bcaabe6d0586fabab72aa1fc6c06b8f83b6dfa0c
         fi
