@@ -151,10 +151,10 @@ jobs:
             cd openwrt
             git checkout c67509efd7d0c43eb3f622f06c8a31aa28d22f6e
         elif [ "${{matrix.target}}" == "mediatek_gl_mt7981" ]; then
-            cd openwrt
-            git checkout bcaabe6d0586fabab72aa1fc6c06b8f83b6dfa0c
             sed -i "/tools\/Makefile/d" devices/common/diy.sh
             sed -i "s/config-*/config-x/" devices/common/diy.sh
+            cd openwrt
+            git checkout bcaabe6d0586fabab72aa1fc6c06b8f83b6dfa0c
         fi
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
     
