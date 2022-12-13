@@ -153,6 +153,8 @@ jobs:
         elif [ "${{matrix.target}}" == "mediatek_gl_mt7981" ]; then
             cd openwrt
             git checkout bcaabe6d0586fabab72aa1fc6c06b8f83b6dfa0c
+            sed -i "/tools\/Makefile/d" devices/common/diy.sh
+            sed -i "s/config-*/config-x/" devices/common/diy.sh
         fi
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
     
