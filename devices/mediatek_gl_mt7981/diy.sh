@@ -10,4 +10,6 @@ sed -i "s?targets/%S/.*'?targets/%S/$kernel_v'?" include/feeds.mk
 
 rm -rf devices/common/patches/{glinet,imagebuilder.patch,iptables.patch,targets.patch,kernel-defaults.patch,disable_flock.patch}
 
+find "devices/${{matrix.target}}/patches/glinet" -type f -maxdepth 1 -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' --no-backup-if-mismatch --merge -p1 -E --forward"
+
 
