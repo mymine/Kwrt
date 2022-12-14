@@ -147,12 +147,17 @@ jobs:
         else
             git clone $REPO_URL -b ${{ env.REPO_BRANCH }} openwrt
         fi
-        if [ "${{ env.REPO_BRANCH }}" == "ipq807x_ipq60xx" ]; then
+        if [ "${{matrix.target}}" == "ipq807x_ipq60xx" ]; then
+            cd openwrt
             git checkout c67509efd7d0c43eb3f622f06c8a31aa28d22f6e
-        elif [ "${{ env.REPO_BRANCH }}" == "mediatek_gl_mt7981" ]; then
+        elif [ "${{matrix.target}}" == "mediatek_gl_mt7981" ]; then
+            sed -i "/tools\/Makefile/d" $GITHUB_WORKSPACE/devices/common/diy.sh
+            sed -i "s/config-*/config-x/" $GITHUB_WORKSPACE/devices/common/diy.sh
+            cd openwrt
             git checkout bcaabe6d0586fabab72aa1fc6c06b8f83b6dfa0c
         fi
-
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+    
     - name: Free up disk space
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -172,6 +177,7 @@ jobs:
         /bin/bash "devices/common/$DIY_SH"
         if [ -f "devices/${{matrix.target}}/$DIY_SH" ]; then
           chmod +x devices/${{matrix.target}}/$DIY_SH
+          echo "/bin/bash devices/${{matrix.target}}/$DIY_SH"
           /bin/bash "devices/${{matrix.target}}/$DIY_SH"
         fi
         cp -Rf ./diy/* ./ || true
@@ -190,7 +196,7 @@ jobs:
         cd openwrt
         find "devices/common/patches" -type f ! -name 'china_mirrors.patch' -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' --no-backup-if-mismatch --merge -p1 -E --forward"
         if [ -n "$(ls -A "devices/${{matrix.target}}/patches" 2>/dev/null)" ]; then
-          find "devices/${{matrix.target}}/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' --no-backup-if-mismatch --merge -p1 -E --forward"
+          find "devices/${{matrix.target}}/patches" -maxdepth 1 -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' --no-backup-if-mismatch --merge -p1 -E --forward"
         fi
         
     - name: Default PPPOE Setting
