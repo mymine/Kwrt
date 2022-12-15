@@ -197,7 +197,7 @@ jobs:
       run: |
         cd openwrt
         #find "devices/common/patches" -type f ! -name 'china_mirrors.patch' -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' --no-backup-if-mismatch --merge -p1 -E --forward"
-        git am devices/common/patches/*.patch
+        git apply devices/common/patches/*.patch
         if [ -n "$(ls -A "devices/${{matrix.target}}/patches" 2>/dev/null)" ]; then
           git apply devices/${{matrix.target}}/patches/*.patch
         fi
