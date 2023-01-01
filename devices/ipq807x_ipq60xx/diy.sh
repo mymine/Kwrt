@@ -15,6 +15,8 @@ rm -rf package/feeds/kiddin9/{firewall,rtl*,base-files,netifd,nft-fullcone,mbedt
 rm -rf package/kernel/nat46
 rm -rf feeds/packages/net/xtables-addons
 
+sed -i "/KernelPackage,cfg80211/d" package/kernel/mac80211/Makefile
+
 make defconfig
 
 rm -rf devices/common/patches/{glinet,imagebuilder.patch,iptables.patch,targets.patch,kernel-defaults.patch,disable_flock.patch}
