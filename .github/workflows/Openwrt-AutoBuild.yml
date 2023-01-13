@@ -144,6 +144,8 @@ jobs:
             cd gl-infra-builder
             python3 setup.py -c configs/config-wlan-ap.yml
             ln -sf gl-infra-builder/wlan-ap/openwrt ../openwrt
+            cd wlan-ap/openwrt
+            ./scripts/gen_config.py target_wlan_ap-gl-axt1800 luci
             cd -
         elif [ "${{matrix.target}}" == "mediatek_gl_mt7981" ]; then
             git clone https://github.com/gl-inet/gl-infra-builder.git
