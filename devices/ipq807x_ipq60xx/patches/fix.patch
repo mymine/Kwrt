@@ -1,0 +1,102 @@
+diff --git a/package/system/fstools/patches/001-find_root_dev-before-find_block_mtd-rootfs.patch b/package/system/fstools/patches/001-find_root_dev-before-find_block_mtd-rootfs.patch
+new file mode 100644
+index 0000000000..97fa2906af
+--- /dev/null
++++ b/package/system/fstools/patches/001-find_root_dev-before-find_block_mtd-rootfs.patch
+@@ -0,0 +1,36 @@
++--- a/block.c
+++++ b/block.c
++@@ -1413,8 +1413,10 @@ static int find_root_dev(char *buf, int len)
++ 	root = s.st_dev;
++ 
++ 	while ((e = readdir(d)) != NULL) {
++-		snprintf(buf, len, "/dev/%s", e->d_name);
+++		if (e->d_type != DT_BLK)
+++			continue;
++ 
+++		snprintf(buf, len, "/dev/%s", e->d_name);
++ 		if (stat(buf, &s) || s.st_rdev != root)
++ 			continue;
++ 
++@@ -1470,7 +1472,10 @@ static int check_extroot(char *path)
++ 	FILE *fp;
++ 	int err;
++ 
++-	err = find_block_mtd("\"rootfs\"", devpath, sizeof(devpath));
+++	err = find_root_dev(devpath, sizeof(devpath));
+++	if (err) {
+++		err = find_block_mtd("\"rootfs\"", devpath, sizeof(devpath));
+++	}
++ #ifdef UBIFS_EXTROOT
++ 	if (err) {
++ 		libubi_t libubi;
++@@ -1480,9 +1485,6 @@ static int check_extroot(char *path)
++ 		libubi_close(libubi);
++ 	}
++ #endif
++-	if (err) {
++-		err = find_root_dev(devpath, sizeof(devpath));
++-	}
++ 	if (err) {
++ 		ULOG_ERR("extroot: unable to determine root device\n");
++ 		return -1;
+diff --git a/package/system/fstools/patches/002-do-not-keep-probing-rootfs-and-rootfs_data-on-nand.patch b/package/system/fstools/patches/002-do-not-keep-probing-rootfs-and-rootfs_data-on-nand.patch
+new file mode 100644
+index 0000000000..f27914eb23
+--- /dev/null
++++ b/package/system/fstools/patches/002-do-not-keep-probing-rootfs-and-rootfs_data-on-nand.patch
+@@ -0,0 +1,36 @@
++--- a/block.c	2022-12-02 20:31:48.842941220 +0800
+++++ b/block.c	2022-12-02 20:41:47.648108275 +0800
++@@ -501,32 +501,7 @@
++ 	if (strcmp(buf, "nand"))
++ 		return false;
++ 
++-	/*
++-	 * --- CUT HERE ---
++-	 * Keep probing rootfs and rootfs_data in the meantime to not break
++-	 * devices using JFFS2 on NAND but only trigger the kernel warnings.
++-	 * Remove this once all devices using JFFS2 and squashfs directly on
++-	 * NAND have been converted to UBI.
++-	 */
++-	snprintf(tmppath, sizeof(tmppath) - 1, "/sys/class/mtd/mtd%s/name", mtdnum);
++-	fp = fopen(tmppath, "r");
++-	if (!fp)
++-		return false;
++-
++-	if (!fgets(buf, sizeof(buf), fp)) {
++-		fclose(fp);
++-		return false;
++-	}
++-	fclose(fp);
++-	buf[sizeof(buf) - 1] = '\0'; /* make sure buf is 0-terminated */
++-	buf[strlen(buf) - 1] = '\0'; /* strip final char (newline) */
++-
++-	/* only return true if name differs from 'rootfs' and 'rootfs_data' */
++-	if (strcmp(buf, "rootfs") && strcmp(buf, "rootfs_data"))
++-		return true;
++-
++-	/* --- CUT HERE --- */
++-	return false;
+++	return true;
++ }
++ 
++ static struct probe_info* _probe_path(char *path)
+diff --git a/target/linux/ipq807x/files/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dts b/target/linux/ipq807x/files/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dts
+index 19af017432..b3d2bbbb97 100644
+--- a/target/linux/ipq807x/files/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dts
++++ b/target/linux/ipq807x/files/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dts
+@@ -324,7 +324,12 @@
+ 
+ 			partition@8280000 {
+ 				label = "overlay";
+-				reg = <0x8280000 0x7d80000>;
++				reg = <0x8280000 0x3d80000>;
++			};
++
++			partition@c000000 {
++				label = "mifw_bak";
++				reg = <0xc000000 0x4000000>;
+ 			};
+ 		};
+ 	};
