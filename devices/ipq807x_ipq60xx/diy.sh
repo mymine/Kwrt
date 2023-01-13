@@ -4,10 +4,9 @@ shopt -s extglob
 
 SHELL_FOLDER=$(dirname $(readlink -f "$0"))
 
+rm -rf target/linux/ipq807x
 mv -f ../feeds/ipq807x/ipq807x target/linux/
 ./scripts/feeds install -a -p wifi_ax -f
-
-rm -rf package/feeds/wifi_ax/hostapd
 
 sed -i "/gl_feeds_common/d" feeds.conf
 sed -i "/ipq807x/d" feeds.conf
