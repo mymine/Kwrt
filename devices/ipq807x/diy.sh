@@ -5,6 +5,16 @@ SHELL_FOLDER=$(dirname $(readlink -f "$0"))
 
 bash $SHELL_FOLDER/../common/kernel_5.15.sh
 
+
+function git_sparse_clone() (
+          commitid="$1" rurl="$2" localdir="$3" && shift 3
+          git clone --filter=blob:none --sparse $rurl $localdir
+          cd $localdir
+		  git checkout $commitid
+          git sparse-checkout init --cone
+          git sparse-checkout set $@
+          )
+
 rm -rf package/boot/uboot-envtools package/firmware/ipq-wifi package/firmware/ath11k* package/kernel/mac80211 target/linux/generic package/kernel/ath10k-ct
 svn export --force https://github.com/robimarko/openwrt/branches/ipq807x-5.15-pr/package/boot/uboot-envtools package/boot/uboot-envtools
 svn export --force https://github.com/robimarko/openwrt/branches/ipq807x-5.15-pr/package/firmware/ipq-wifi package/firmware/ipq-wifi
@@ -18,7 +28,8 @@ svn co https://github.com/robimarko/openwrt/branches/ipq807x-5.15-pr/target/linu
 rm -rf target/linux/generic/.svn
 svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/generic/hack-5.15 target/linux/generic/hack-5.15
 
-svn co https://github.com/robimarko/openwrt/branches/ipq807x-5.15-pr/target/linux/ipq807x target/linux/ipq807x
+git_sparse_clone ipq807x-2023-01-03-1333 "https://github.com/robimarko/openwrt" "boos" target/linux/ipq807x
+cp -rf boos/target/linux/ipq807x target/linux/
 
 git clone https://github.com/robimarko/nss-packages --depth 1 package/nss-packages
 
