@@ -8,6 +8,8 @@ rm -rf target/linux/ipq807x
 mv -f ../feeds/ipq807x/ipq807x target/linux/
 ./scripts/feeds install -a -p wifi_ax -f
 
+rm -rf package/feeds/wifi_ax/hostapd
+
 sed -i "/gl_feeds_common/d" feeds.conf
 sed -i "/ipq807x/d" feeds.conf
 sed -i "/wifi_ax/d" feeds.conf
