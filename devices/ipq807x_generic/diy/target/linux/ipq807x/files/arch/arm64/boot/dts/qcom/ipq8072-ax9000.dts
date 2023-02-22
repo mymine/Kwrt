@@ -21,6 +21,12 @@
 		led-failsafe = &led_system_yellow;
 		led-running = &led_system_blue;
 		led-upgrade = &led_system_yellow;
+		/* Aliases as required by u-boot to patch MAC addresses */
+		ethernet0 = &dp1;
+		ethernet1 = &dp2;
+		ethernet2 = &dp3;
+		ethernet3 = &dp4;
+		ethernet4 = &dp5;
 		label-mac-device = &dp5;
 	};
 
