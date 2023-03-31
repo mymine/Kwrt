@@ -23,6 +23,7 @@ svn export --force  https://github.com/openwrt/packages/trunk/net/xtables-addons
 
 svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/generic/hack-5.15 target/linux/generic/hack-5.15
 svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/generic/backport-5.15 target/linux/generic/backport-5.15
+svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/generic/pending-5.15 target/linux/generic/pending-5.15
 find target/linux/generic/backport-5.15 -name "[0-9][0-9][0-9]-[a-z][a-z]*" -exec rm -f {} \;
 rm -rf target/linux/generic/backport-5.15/{802-v6.1-nvmem*,803-v5.19-nvmem*,733-v6.2-02-net-mediatek-sgmii-ensure*,733-v6.2-03-net-mediatek*,733-v6.2-04-mtk_sgmii-enable*}
 
