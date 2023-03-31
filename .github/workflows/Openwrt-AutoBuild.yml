@@ -234,6 +234,7 @@ jobs:
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
+        mixkey: ${{ env.MTARGET }}
         clean: ${{ contains(github.event.action, 'nocache') }}
         prefix: ${{ github.workspace }}/openwrt
     
@@ -241,9 +242,7 @@ jobs:
       run: |
         shopt -s extglob
         cd openwrt
-        if [[ ! -f staging_dir/*${{ env.MTARGET }}*/bin ]]; then
-           make dirclean
-        else
+        if [[ -f staging_dir/*${{ env.MTARGET }}*/bin ]]; then
             rm -rf staging_dir/!(*${{ env.MTARGET }}*|host|hostpkg) build_dir/!(*${{ env.MTARGET }}*|host|hostpkg)
         fi
         df -hT
