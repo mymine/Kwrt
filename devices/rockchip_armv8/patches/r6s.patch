@@ -35,7 +35,7 @@
 +	friendlyarm,nanopi-r6c)
  		ucidef_set_interfaces_lan_wan 'eth1' 'eth0'
  		;;
-+	friendlyarm,nanopi-r6c)
++	friendlyarm,nanopi-r6s)
 +		ucidef_set_interfaces_lan_wan "eth1 eth0" "eth2"
 +		;;
 +	*)
