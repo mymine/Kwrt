@@ -14,7 +14,7 @@ curl -sfL https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linu
 
 sed -i "s/ +PACKAGE_kmod-backlight:kmod-backlight//" package/kernel/linux/modules/video.mk
 
-sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += autocore-x86 kmod-usb-hid kmod-mmc kmod-sdhci usbutils pciutils lm-sensors-detect kmod-alx kmod-vmxnet3 kmod-igbvf kmod-iavf kmod-bnx2x kmod-pcnet32 kmod-tulip kmod-r8125 kmod-8139cp kmod-8139too kmod-i40e kmod-drm-i915 kmod-drm-amdgpu kmod-mlx4-core kmod-mlx5-core fdisk lsblk kmod-phy-broadcom/' target/linux/x86/Makefile
+sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += kmod-usb-hid kmod-mmc kmod-sdhci usbutils pciutils lm-sensors-detect kmod-alx kmod-vmxnet3 kmod-igbvf kmod-iavf kmod-bnx2x kmod-pcnet32 kmod-tulip kmod-r8125 kmod-8139cp kmod-8139too kmod-i40e kmod-drm-i915 kmod-drm-amdgpu kmod-mlx4-core kmod-mlx5-core fdisk lsblk kmod-phy-broadcom/' target/linux/x86/Makefile
 
 svn co https://github.com/openwrt/openwrt/trunk/package/kernel/mt76 package/feeds/kiddin9/mt76
 curl -sfL https://raw.githubusercontent.com/immortalwrt/immortalwrt/master/package/kernel/mt76/patches/0001-mt76-allow-VHT-rate-on-2.4GHz.patch -o package/feeds/kiddin9/mt76/patches/0001-mt76-allow-VHT-rate-on-2.4GHz.patch
