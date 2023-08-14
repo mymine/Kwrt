@@ -5,3 +5,5 @@ svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/ipq60xx target/li
 
 svn co https://github.com/coolsnowwolf/lede/trunk/package/qca package/qca
 
+rm -rf package/kernel/{qca-nss-dp,qca-ssdk}
+
