@@ -22,10 +22,13 @@ CONFIG_FEED_wifi_ax=n
 " >> .config
 
 sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/feeds/wifi_ax/hostapd/Makefile
+sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/network/config/netifd/Makefile
+sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/system/procd/Makefile
+sed -i "s/PKG_NAME:=iw/PKG_NAME:=iw\nPKG_SOURCE_DATE:=2099-12-06/" package/network/utils/iw/Makefile
 
 sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += wireless-regdb ethtool/' target/linux/bcm27xx/Makefile
 
-#rm -rf feeds/kiddin9/{rtl*,base-files,netifd,fullconenat-nft,mbedtls,oaf,shortcut-fe,fullconenat}
+#rm -rf feeds/kiddin9/{rtl*,base-files,fullconenat-nft,mbedtls,oaf,shortcut-fe,fullconenat}
 #svn co https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/network/services/fullconenat feeds/kiddin9/fullconenat
 
 #rm -rf package/kernel/{ath10k-ct,mt76,rtl8812au-ct}
