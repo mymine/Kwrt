@@ -1,5 +1,5 @@
---- a/package/base-files/files/etc/rc.common
-+++ b/package/base-files/files/etc/rc.common
+--- a/base-files/files/etc/rc.common
++++ b/base-files/files/etc/rc.common
 @@ -28,7 +28,10 @@ restart() {
  }
  
@@ -13,8 +13,8 @@
  
  shutdown() {
 
---- a/package/base-files/files/lib/functions.sh
-+++ b/package/base-files/files/lib/functions.sh
+--- a/base-files/files/lib/functions.sh
++++ b/base-files/files/lib/functions.sh
 @@ -283,10 +283,13 @@ default_postinst() {
  			if [ "$PKG_UPGRADE" != "1" ]; then
  				"$i" enable
@@ -31,8 +31,8 @@
  }
  
 
---- a/package/base-files/files/etc/shinit
-+++ b/package/base-files/files/etc/shinit
+--- a/base-files/files/etc/shinit
++++ b/base-files/files/etc/shinit
 @@ -2,6 +2,8 @@
  [ -x /usr/bin/vim ] && alias vi=vim || alias vim=vi
  
@@ -42,8 +42,8 @@
  
  [ -z "$KSH_VERSION" -o \! -s /etc/mkshrc ] || . /etc/mkshrc
 
---- a/package/base-files/files/sbin/sysupgrade
-+++ b/package/base-files/files/sbin/sysupgrade
+--- a/base-files/files/sbin/sysupgrade
++++ b/base-files/files/sbin/sysupgrade
 @@ -231,24 +231,15 @@ do_save_conffiles() {
  	ask_bool 0 "Edit config file list" && vi "$CONFFILES"
  
@@ -79,8 +79,20 @@
  
  	v "Saving config files..."
 
---- a/package/base-files/files/etc/profile
-+++ b/package/base-files/files/etc/profile
+--- a/package/base-files/root/etc/init.d/ucitrack
++++ b/package/base-files/root/etc/init.d/ucitrack
+@@ -8,7 +8,7 @@ register_init() {
+ 	local init="$2"
+ 	shift; shift
+ 
+-	if [ -x "$init" ] && "$init" enabled && ! grep -sqE 'USE_PROCD=.' "$init"; then
++	if [ -x "$init" ] && ! grep -sqE 'USE_PROCD=.' "$init"; then
+ 		logger -t "ucitrack" "Setting up /etc/config/$config reload trigger for non-procd $init"
+ 		procd_add_config_trigger "config.change" "$config" "$init" "$@"
+ 	fi
+
+--- a/base-files/files/etc/profile
++++ b/base-files/files/etc/profile
 @@ -22,7 +23,11 @@ esac
  
  [ -n "$FAILSAFE" ] || {
@@ -95,8 +107,8 @@
  	unset FILE
  }
 
---- a/package/base-files/files/lib/preinit/02_sysinfo
-+++ b/package/base-files/files/lib/preinit/02_sysinfo
+--- a/base-files/files/lib/preinit/02_sysinfo
++++ b/base-files/files/lib/preinit/02_sysinfo
 @@ -5,6 +5,7 @@ do_sysinfo_generic() {
  		echo "$(strings /proc/device-tree/compatible | head -1)" > /tmp/sysinfo/board_name
  	[ ! -e /tmp/sysinfo/model -a -e /proc/device-tree/model ] && \
