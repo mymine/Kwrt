@@ -148,7 +148,7 @@ jobs:
             sed -i "s//\ipq807x/\/ipq807x_v5.4/" profiles/glinet_axt1800.yml
             sed -i "/ucentral-ap/d" profiles/glinet_axt1800.yml
             cd openwrt
-            .python3 /scripts/gen_config.py glinet_axt1800
+            python3 ./scripts/gen_config.py glinet_axt1800
         elif [ "${{matrix.target}}" == "mediatek_gl_mt7981" ]; then
             git clone https://github.com/gl-inet/gl-infra-builder.git
             cd gl-infra-builder
