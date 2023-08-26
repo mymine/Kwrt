@@ -5,7 +5,7 @@ shopt -s extglob
 SHELL_FOLDER=$(dirname $(readlink -f "$0"))
 
 rm -rf target/linux/feeds
-mv -f ../feeds/ipq807x/ipq807x target/linux/ipq807x
+mv -f ../feeds/ipq807x_v5.4/ipq60xx target/linux/ipq60xx
 
 rm -rf package/feeds
 ./scripts/feeds install -a -p ipq807x -f
@@ -14,6 +14,8 @@ rm -rf package/feeds
 ./scripts/feeds install -a
 
 sed -i "/CONFIG_KERNEL_/d" .config
+
+sed -i "/KernelPackage,ipt-nat6/d" package/feeds/ipq807x/linux/modules/netfilter.mk
 
 echo "
 CONFIG_FEED_gl_feeds_common=n
@@ -29,7 +31,7 @@ sed -i "s/PKG_NAME:=iw/PKG_NAME:=iw\nPKG_SOURCE_DATE:=2099-12-06/" package/netwo
 sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += wireless-regdb ethtool/' target/linux/bcm27xx/Makefile
 
 #rm -rf feeds/kiddin9/{rtl*,base-files,fullconenat-nft,mbedtls,oaf,shortcut-fe,fullconenat}
-rm -rf feeds/kiddin9/base-files
+rm -rf feeds/kiddin9/{base-files,fullconenat-nft,fullconenat}
 #svn co https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/network/services/fullconenat feeds/kiddin9/fullconenat
 
 #rm -rf package/kernel/{ath10k-ct,mt76,rtl8812au-ct}
