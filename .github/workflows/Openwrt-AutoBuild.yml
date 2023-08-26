@@ -143,18 +143,9 @@ jobs:
             cd wlan-ap
             python3 ./setup.py --setup
             ln -sf wlan-ap/openwrt ../openwrt
-            sed -i "s/target: ipq807x/target: ipq807x_v5.4/" profiles/glinet_axt1800.yml
-            sed -i "s/- wifi-ax/- wifi-ax-v54/" profiles/glinet_axt1800.yml
-            sed -i "s/\/ipq807x/\/ipq807x_v5.4/" profiles/glinet_axt1800.yml
             sed -i "/ucentral-ap/d" profiles/glinet_axt1800.yml
             cd openwrt
             python3 ./scripts/gen_config.py glinet_axt1800
-        elif [ "${{matrix.target}}" == "mediatek_gl_mt7981" ]; then
-            git clone https://github.com/gl-inet/gl-infra-builder.git
-            cd gl-infra-builder
-            python3 setup.py -c configs/config-mt798x-7.6.6.1.yml
-            ln -sf gl-infra-builder/mt7981 ../openwrt
-            cd -
         elif [[ ! "${{ env.REPO_BRANCH }}" && "$REPO_URL" == "https://github.com/openwrt/openwrt" ]]; then
           REPO_BRANCH="$((curl -gs -H 'Content-Type: application/json' \
            -H "Authorization: Bearer ${{ secrets.TOKEN_KIDDIN9 }}" \

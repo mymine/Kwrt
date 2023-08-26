@@ -5,7 +5,7 @@ shopt -s extglob
 SHELL_FOLDER=$(dirname $(readlink -f "$0"))
 
 rm -rf target/linux/feeds
-mv -f ../feeds/ipq807x_v5.4/ipq807x target/linux/ipq807x
+mv -f ../feeds/ipq807x/ipq807x target/linux/ipq807x
 
 rm -rf package/feeds
 ./scripts/feeds install -a -p ipq807x -f
