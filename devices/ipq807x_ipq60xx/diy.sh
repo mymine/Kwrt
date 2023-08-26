@@ -13,7 +13,7 @@ rm -rf package/feeds
 ./scripts/feeds install -a -p kiddin9 -f
 ./scripts/feeds install -a
 
-#sed -i "/CONFIG_KERNEL_/d" .config
+sed -i "/CONFIG_KERNEL_/d" .config
 
 echo "
 CONFIG_FEED_gl_feeds_common=n
