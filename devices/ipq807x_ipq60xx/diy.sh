@@ -15,7 +15,7 @@ rm -rf package/feeds
 
 sed -i "/CONFIG_KERNEL_/d" .config
 
-sed -i "/KernelPackage,ipt-nat6/d" package/feeds/ipq807x/linux/modules/netfilter.mk
+#sed -i "/KernelPackage,ipt-nat6/d" package/feeds/ipq807x/linux/modules/netfilter.mk
 
 echo "
 CONFIG_FEED_gl_feeds_common=n
@@ -28,7 +28,7 @@ sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/network/conf
 sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/system/procd/Makefile
 sed -i "s/PKG_NAME:=iw/PKG_NAME:=iw\nPKG_SOURCE_DATE:=2099-12-06/" package/network/utils/iw/Makefile
 
-sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += wireless-regdb ethtool/' target/linux/bcm27xx/Makefile
+sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += wireless-regdb ethtool wpad-basic-openssl/' target/linux/ipq60xx/Makefile
 
 #rm -rf feeds/kiddin9/{rtl*,base-files,fullconenat-nft,mbedtls,oaf,shortcut-fe,fullconenat}
 rm -rf feeds/kiddin9/base-files
