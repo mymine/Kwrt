@@ -25,7 +25,7 @@ sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/network/conf
 sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2099-12-06/" package/system/procd/Makefile
 sed -i "s/PKG_NAME:=iw/PKG_NAME:=iw\nPKG_SOURCE_DATE:=2099-12-06/" package/network/utils/iw/Makefile
 
-sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += wireless-regdb ethtool kmod-sched-cake wpad-basic-openssl/' target/linux/ipq60xx/Makefile
+sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += wireless-regdb ethtool kmod-sched-cake wpad-openssl/' target/linux/ipq60xx/Makefile
 
 #rm -rf feeds/kiddin9/{rtl*,base-files,fullconenat-nft,mbedtls,oaf,shortcut-fe,fullconenat}
 rm -rf feeds/kiddin9/base-files
