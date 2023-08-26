@@ -146,6 +146,7 @@ jobs:
             sed -i "s/target: ipq807x/target: ipq807x_v5.4/" profiles/glinet_axt1800.yml
             sed -i "s/\/ipq807x/\/ipq807x_v5.4/" profiles/glinet_axt1800.yml
             sed -i "/ucentral-ap/d" profiles/glinet_axt1800.yml
+            sed -i "/wifi_ax/d" profiles/glinet_axt1800.yml
             cd openwrt
             python3 ./scripts/gen_config.py glinet_axt1800
         elif [[ ! "${{ env.REPO_BRANCH }}" && "$REPO_URL" == "https://github.com/openwrt/openwrt" ]]; then
