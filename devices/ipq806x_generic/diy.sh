@@ -27,5 +27,6 @@ sed -i "s/CONFIG_ALL_NONSHARED=y/CONFIG_ALL_NONSHARED=n/" .config
 sed -i "s/CONFIG_ALL_KMODS=y/CONFIG_ALL_KMODS=n/" .config
 make defconfig
 sed -i "s/# CONFIG_ALL_NONSHARED is not set/CONFIG_ALL_NONSHARED=y/" .config
+sed -i "s/# CONFIG_TARGET_DEVICE_ipq806x_generic_DEVICE_xiaomi_r3d is not set/CONFIG_TARGET_DEVICE_ipq806x_generic_DEVICE_xiaomi_r3d=y/" .config
 
 
