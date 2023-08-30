@@ -34,7 +34,7 @@ sed -i "/KernelPackage,fs-xfs/d" package/kernel/linux/modules/fs.mk
 sed -i "/KernelPackage,br-netfilter/d" package/kernel/linux/modules/netfilter.mk
 sed -i "/KernelPackage,switch-ar8xxx/d" package/kernel/linux/modules/netdevices.mk
 
-#rm -rf feeds/kiddin9/{rtl*,base-files,fullconenat-nft,mbedtls,oaf,wireguard,fullconenat}
+rm -rf package/feeds/kiddin9/!(opkg)
 rm -rf feeds/kiddin9/{base-files,fullconenat-nft,oaf,rkp-ipid,shortcut-fe} package/feeds/packages/{v4l2loopback,ovpn-dco,libpfring,mdio-netlink} package/kernel/{nat46,ath10k-ct,button-hotplug} package/feeds/ipq807x/{wireguard,batman-adv} package/kernel/mt76
 
 sed -i "s/SUBTARGET:=generic/SUBTARGET:=ipq60xx_64/" target/linux/ipq60xx/generic/target.mk
