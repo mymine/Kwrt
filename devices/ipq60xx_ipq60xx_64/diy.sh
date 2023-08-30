@@ -35,11 +35,12 @@ sed -i "/KernelPackage,br-netfilter/d" package/kernel/linux/modules/netfilter.mk
 sed -i "/KernelPackage,switch-ar8xxx/d" package/kernel/linux/modules/netdevices.mk
 
 #rm -rf feeds/kiddin9/{rtl*,base-files,fullconenat-nft,mbedtls,oaf,wireguard,fullconenat}
-rm -rf feeds/kiddin9/{base-files,fullconenat-nft,oaf,rkp-ipid,shortcut-fe} package/feeds/packages/{v4l2loopback,ovpn-dco,libpfring} package/kernel/{nat46,ath10k-ct,button-hotplug} package/feeds/ipq807x/{wireguard,batman-adv} package/kernel/mt76
-rm -rf package/feeds/ipq807x/qca-diag
+rm -rf feeds/kiddin9/{base-files,fullconenat-nft,oaf,rkp-ipid,shortcut-fe} package/feeds/packages/{v4l2loopback,ovpn-dco,libpfring,mdio-netlink} package/kernel/{nat46,ath10k-ct,button-hotplug} package/feeds/ipq807x/{wireguard,batman-adv} package/kernel/mt76
+
 sed -i "s/SUBTARGET:=generic/SUBTARGET:=ipq60xx_64/" target/linux/ipq60xx/generic/target.mk
 
 mv -f target/linux/ipq60xx/generic target/linux/ipq60xx/ipq60xx_64
 
 sed -i "s/SUBTARGETS:=generic /SUBTARGETS:=ipq60xx_64 /" target/linux/ipq60xx/Makefile
 
+==========
