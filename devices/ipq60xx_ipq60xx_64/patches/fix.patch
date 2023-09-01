@@ -26,25 +26,3 @@
  	rm -f $(PKG_BUILD_DIR)/version.sh
  	touch $(PKG_BUILD_DIR)/version.sh
  	chmod +x $(PKG_BUILD_DIR)/version.sh
-
---- a/include/kernel.mk
-+++ b/include/kernel.mk
-@@ -246,7 +246,6 @@ $(call KernelPackage/$(1)/config)
- 				$(CP) -L $$$$$$$$mod $$(1)/$(MODULES_SUBDIR)/ ; \
- 			else \
- 				echo "ERROR: module '$$$$$$$$mod' is missing." >&2; \
--				exit 1; \
- 			fi; \
- 		  done;
- 		  $(call ModuleAutoLoad,$(1),$$(1),$(filter-out 0-,$(word 1,$(AUTOLOAD))-),$(filter-out 0,$(word 2,$(AUTOLOAD))),$(sort $(wordlist 3,99,$(AUTOLOAD))))
-
---- a/include/package-ipkg.mk
-+++ b/include/package-ipkg.mk
-@@ -84,7 +84,6 @@ ifneq ($(PKG_NAME),toolchain)
- 		if [ -f "$(PKG_INFO_DIR)/$(1).missing" ]; then \
- 			echo "Package $(1) is missing dependencies for the following libraries:" >&2; \
- 			cat "$(PKG_INFO_DIR)/$(1).missing" >&2; \
--			false; \
- 		fi; \
- 	)
-   endef
