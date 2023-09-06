@@ -115,3 +115,29 @@
 +&usb3 {
 +status = "ok";
 +};
+
+diff --git a/package/firmware/ath11k-wifi/board-qihoo_360v6.bin.IPQ6018 b/package/firmware/ath11k-wifi/board-qihoo-v6.bin.IPQ6018
+similarity index 100%
+rename from package/firmware/ath11k-wifi/board-qihoo_360v6.bin.IPQ6018
+rename to package/firmware/ath11k-wifi/board-qihoo-v6.bin.IPQ6018
+
+--- a/package/firmware/ath11k-wifi/Makefile
++++ b/package/firmware/ath11k-wifi/Makefile
+@@ -28,7 +28,7 @@ ALLWIFIBOARDS:= \
+   cmiot-ax18 \
+ 	gl-ax1800 \
+ 	gl-axt1800 \
+-	qihoo_v6
++	qihoo-v6
+ 
+ ALLWIFIPACKAGES:=$(foreach BOARD,$(ALLWIFIBOARDS),ath11k-wifi-$(BOARD))
+ 
+@@ -88,7 +88,7 @@ endef
+ $(eval $(call generate-ath11k-wifi-package,cmiot-ax18,CMIOT AX18))
+ $(eval $(call generate-ath11k-wifi-package,gl-ax1800,Gl.iNET AX1800))
+ $(eval $(call generate-ath11k-wifi-package,gl-axt1800,Gl.iNET AXT1800))
+-$(eval $(call generate-ath11k-wifi-package,qihoo_v6,QIHOO 360V6))
++$(eval $(call generate-ath11k-wifi-package,qihoo-v6,QIHOO 360V6))
+ 
+ 
+ $(foreach PACKAGE,$(ALLWIFIPACKAGES),$(eval $(call BuildPackage,$(PACKAGE))))

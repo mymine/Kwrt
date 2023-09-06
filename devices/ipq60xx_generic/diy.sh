@@ -1,10 +1,10 @@
 #!/bin/bash
 shopt -s extglob
 
-rm -rf package/boot/uboot-envtools package/kernel package/firmware/ath11k* package/qca target/linux/generic target/linux/ipq60xx package/network/config/netifd feeds/kiddin9/fullconenat toolchain tools/squashfskit4
+rm -rf package/boot/uboot-envtools package/kernel package/qca package/firmware/ath11k-firmware target/linux/generic target/linux/ipq60xx package/network/config/netifd feeds/kiddin9/fullconenat toolchain tools/squashfskit4
 svn export --force https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/boot/uboot-envtools package/boot/uboot-envtools
 svn export --force https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/firmware/ath11k-firmware package/firmware/ath11k-firmware
-svn export --force https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/qca package/qca
+svn export --force https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/firmware/ath11k-wifi package/firmware/ath11k-wifi
 
 svn co https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/target/linux/generic target/linux/generic
 svn co https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/target/linux/ipq60xx target/linux/ipq60xx
@@ -33,6 +33,14 @@ svn co https://github.com/openwrt/openwrt/branches/openwrt-22.03/package/network
 svn co https://github.com/openwrt/openwrt/branches/openwrt-22.03/package/network/utils/uqmi package/network/utils/uqmi
 
 sed -i "s/5.4.0/4.4.0/" toolchain/glibc/common.mk
+
+make defconfig
+svn export --force https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/qca package/qca
+
+sed -i "s/CONFIG_ALL_NONSHARED=y/CONFIG_ALL_NONSHARED=n/" .config
+sed -i "s/CONFIG_ALL_KMODS=y/CONFIG_ALL_KMODS=n/" .config
+make defconfig
+sed -i "s/# CONFIG_ALL_NONSHARED is not set/CONFIG_ALL_NONSHARED=y/" .config
 
 echo '
 CONFIG_PNP_DEBUG_MESSAGES=y
