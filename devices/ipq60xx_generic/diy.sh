@@ -9,6 +9,8 @@ sed -i "/CONFIG_KERNEL_/d" .config
 
 rm -rf devices/common/patches/{fix.patch,targets.patch} package/network/config/netifd package/feeds/kiddin9/rtl* target/linux/generic/files
 
+svn co https://github.com/openwrt/openwrt/branches/openwrt-23.05/target/imagebuilder target/imagebuilder
+
 svn co https://github.com/coolsnowwolf/openwrt-gl-ax1800/trunk/package/network/config/netifd package/network/config/netifd
 rm -rf package/network/config/netifd/patches
 
