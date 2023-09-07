@@ -1,65 +1,44 @@
---- a/rules.mk
-+++ b/rules.mk
-@@ -136,8 +136,12 @@ else
-   TOOLCHAIN_DIR_NAME:=toolchain-$(GNU_TARGET_NAME)
- endif
- 
--ifeq ($(or $(CONFIG_EXTERNAL_TOOLCHAIN),$(CONFIG_TARGET_uml)),)
--  iremap = -f$(if $(CONFIG_REPRODUCIBLE_DEBUG_INFO),file,macro)-prefix-map=$(1)=$(2)
-+ifeq ($(or $(CONFIG_EXTERNAL_TOOLCHAIN),$(CONFIG_GCC_VERSION_4_8),$(CONFIG_TARGET_uml)),)
-+  ifeq ($(CONFIG_GCC_USE_EMBEDDED_PATH_REMAP),y)
-+    iremap = -fmacro-prefix-map=$(1)=$(2)
-+  else
-+    iremap = -iremap$(1):$(2)
-+  endif
- endif
- 
- PACKAGE_DIR:=$(BIN_DIR)/packages
-
 --- a/include/image.mk
 +++ b/include/image.mk
-@@ -159,9 +159,6 @@ DTC_WARN_FLAGS := \
-   -Wno-graph_port \
-   -Wno-unique_unit_address
- 
--DTC_FLAGS += $(DTC_WARN_FLAGS)
--DTCO_FLAGS += $(DTC_WARN_FLAGS)
--
- define Image/pad-to
- 	dd if=$(1) of=$(1).new bs=$(2) conv=sync
- 	mv $(1).new $(1)
+@@ -609,6 +609,7 @@ define Device/Build/image
+ 	IMAGE_TYPE=$(word 1,$(subst ., ,$(2))) \
+ 	IMAGE_FILESYSTEM="$(1)" \
+ 	IMAGE_PREFIX="$(IMAGE_PREFIX)" \
++	KERNEL_INITRAMFS_IMAGE="$(subst $(IMG_PREFIX_EXTRA),,$(KERNEL_INITRAMFS_IMAGE))" \
+ 	DEVICE_VENDOR="$(DEVICE_VENDOR)" \
+ 	DEVICE_MODEL="$(DEVICE_MODEL)" \
+ 	DEVICE_VARIANT="$(DEVICE_VARIANT)" \
 
---- a/package/network/utils/iptables/Makefile
-+++ b/package/network/utils/iptables/Makefile
-@@ -784,7 +784,6 @@ $(eval $(call BuildPlugin,iptables-mod-ulog,$(IPT_ULOG-m)))
- $(eval $(call BuildPlugin,iptables-mod-hashlimit,$(IPT_HASHLIMIT-m)))
- $(eval $(call BuildPlugin,iptables-mod-rpfilter,$(IPT_RPFILTER-m)))
- $(eval $(call BuildPlugin,iptables-mod-led,$(IPT_LED-m)))
--$(eval $(call BuildPlugin,iptables-mod-socket,$(IPT_SOCKET-m)))
- $(eval $(call BuildPlugin,iptables-mod-tproxy,$(IPT_TPROXY-m)))
- $(eval $(call BuildPlugin,iptables-mod-tee,$(IPT_TEE-m)))
- $(eval $(call BuildPlugin,iptables-mod-u32,$(IPT_U32-m)))
+--- a/scripts/json_add_image_info.py
++++ b/scripts/json_add_image_info.py
+@@ -48,6 +48,7 @@ def get_titles():
+     "profiles": {
+         device_id: {
+             "image_prefix": getenv("IMAGE_PREFIX"),
++            "image_initramfs": getenv("KERNEL_INITRAMFS_IMAGE"),
+             "images": [
+                 {
+                     "type": getenv("IMAGE_TYPE"),
 
---- a/include/target.mk
-+++ b/include/target.mk
-@@ -147,10 +147,17 @@ ifneq ($(TARGET_BUILD)$(if $(DUMP),,1),)
- endif
+--- a/scripts/json_overview_image_info.py
++++ b/scripts/json_overview_image_info.py
+@@ -47,7 +47,7 @@ def get_initial_output(image_info):
  
- GENERIC_PLATFORM_DIR := $(TOPDIR)/target/linux/generic
-+ifeq ($(CONFIG_TARGET_ipq60xx),y)
-+GENERIC_BACKPORT_DIR :=
-+GENERIC_PATCH_DIR :=
-+GENERIC_HACK_DIR :=
-+GENERIC_FILES_DIR :=
-+else
- GENERIC_BACKPORT_DIR := $(GENERIC_PLATFORM_DIR)/backport$(if $(wildcard $(GENERIC_PLATFORM_DIR)/backport-$(KERNEL_PATCHVER)),-$(KERNEL_PATCHVER))
- GENERIC_PATCH_DIR := $(GENERIC_PLATFORM_DIR)/pending$(if $(wildcard $(GENERIC_PLATFORM_DIR)/pending-$(KERNEL_PATCHVER)),-$(KERNEL_PATCHVER))
- GENERIC_HACK_DIR := $(GENERIC_PLATFORM_DIR)/hack$(if $(wildcard $(GENERIC_PLATFORM_DIR)/hack-$(KERNEL_PATCHVER)),-$(KERNEL_PATCHVER))
- GENERIC_FILES_DIR := $(foreach dir,$(wildcard $(GENERIC_PLATFORM_DIR)/files $(GENERIC_PLATFORM_DIR)/files-$(KERNEL_PATCHVER)),"$(dir)")
-+endif
  
- __config_name_list = $(1)/config-$(KERNEL_PATCHVER) $(1)/config-default
- __config_list = $(firstword $(wildcard $(call __config_name_list,$(1))))
+ if output:
+-    default_packages, output["arch_packages"] = run(
++    default_packages, output["arch_packages"], output["kernel_version"] = run(
+         [
+             "make",
+             "--no-print-directory",
+@@ -55,6 +55,7 @@ def get_initial_output(image_info):
+             "target/linux/",
+             "val.DEFAULT_PACKAGES",
+             "val.ARCH_PACKAGES",
++            "val.LINUX_VERSION",
+         ],
+         stdout=PIPE,
+         stderr=PIPE,
 
 --- a/package/kernel/mac80211/ath.mk
 +++ b/package/kernel/mac80211/ath.mk
@@ -72,18 +51,6 @@
    FILES:= \
  	$(PKG_BUILD_DIR)/drivers/net/wireless/ath/ath11k/ath11k.ko
  endef
-
---- a/target/linux/ipq60xx/Makefile
-+++ b/target/linux/ipq60xx/Makefile
-@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/target.mk
- DEFAULT_PACKAGES += \
- 	kmod-leds-gpio kmod-gpio-button-hotplug swconfig \
- 	kmod-qca-nss-dp kmod-qca-nss-drv kmod-qca-ssdk \
--	kmod-ath11k-ahb qca-ssdk-shell wpad-openssl \
-+	kmod-ath11k-ahb qca-ssdk-shell wpad-basic-mbedtls \
- 	ath11k-firmware-ipq6018 nss-firmware-ipq6018 \
- 	kmod-qca-nss-drv-pppoe kmod-qca-nss-ecm uboot-envtools
- 
 
 --- a/target/linux/ipq60xx/image/Makefile
 +++ b/target/linux/ipq60xx/image/Makefile
