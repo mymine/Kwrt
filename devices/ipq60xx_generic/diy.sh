@@ -2,7 +2,6 @@
 shopt -s extglob
 
 svn co https://github.com/coolsnowwolf/lede/trunk/target/linux/ipq60xx target/linux/ipq60xx
- target/linux/ipq60xx/Makefile
 sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += kmod-ath11k-ahb ath11k-firmware-ipq6018 wpad-basic-mbedtls/' target/linux/ipq60xx/Makefile
 make defconfig
 
