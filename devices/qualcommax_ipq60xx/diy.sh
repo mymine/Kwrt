@@ -4,7 +4,7 @@ shopt -s extglob
 
 SHELL_FOLDER=$(dirname $(readlink -f "$0"))
 
-rm -rf package/feeds/packages/libpfring package/feeds/packages/xr_usb_serial_common
+rm -rf package/feeds/packages/{libpfring,xr_usb_serial_common,coova-chilli}
 
 git clone https://github.com/JiaY-shi/nss-packages.git package/nss-packages
 
