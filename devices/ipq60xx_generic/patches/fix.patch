@@ -104,8 +104,8 @@
  
  $(foreach PACKAGE,$(ALLWIFIPACKAGES),$(eval $(call BuildPackage,$(PACKAGE))))
 
---- a/base-files/files/etc/init.d/led
-+++ b/base-files/files/etc/init.d/led
+--- a/package/feeds/kiddin9/base-files/files/etc/init.d/led
++++ b/package/feeds/kiddin9/base-files/files/etc/init.d/led
 @@ -76,6 +76,8 @@ load_led() {
  		"netdev")
  			[ -n "$dev" ] && {
