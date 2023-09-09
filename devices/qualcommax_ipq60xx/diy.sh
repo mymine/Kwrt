@@ -3,6 +3,9 @@
 shopt -s extglob
 
 SHELL_FOLDER=$(dirname $(readlink -f "$0"))
+
+rm -rf package/feeds/packages/libpfring
+
 make defconfig
 
 git clone https://github.com/JiaY-shi/nss-packages.git package/nss-packages
