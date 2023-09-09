@@ -104,6 +104,18 @@
  
  $(foreach PACKAGE,$(ALLWIFIPACKAGES),$(eval $(call BuildPackage,$(PACKAGE))))
 
+--- a/base-files/files/etc/init.d/led
++++ b/base-files/files/etc/init.d/led
+@@ -76,6 +76,8 @@ load_led() {
+ 		"netdev")
+ 			[ -n "$dev" ] && {
+ 				echo $dev > /sys/class/leds/${sysfs}/device_name
++				[ -e "/sys/class/leds/${sysfs}/mode" ]  && \
++					echo $mode > /sys/class/leds/${sysfs}/mode
+ 				for m in $mode; do
+ 					[ -e "/sys/class/leds/${sysfs}/$m" ] && \
+ 						echo 1 > /sys/class/leds/${sysfs}/$m
+
 diff --git a/package/firmware/ath11k-wifi/board-qihoo_360v6.bin.IPQ6018 b/package/firmware/ath11k-wifi/board-qihoo-v6.bin.IPQ6018
 similarity index 100%
 rename from package/firmware/ath11k-wifi/board-qihoo_360v6.bin.IPQ6018
