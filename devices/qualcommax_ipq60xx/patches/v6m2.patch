@@ -38,7 +38,7 @@
 +endef
 +TARGET_DEVICES += cmiot_ax18
 +
-+define Device/360_v6
++define Device/qihoo_v6
 +	$(call Device/FitImage)
 +	$(call Device/UbiFit)
 +	DEVICE_VENDOR := Qihoo 360
@@ -49,7 +49,7 @@
 +	DEVICE_PACKAGES := ath11k-wifi-qihoo_v6
 +	SOC := ipq6018
 +endef
-+TARGET_DEVICES += 360_v6
++TARGET_DEVICES += qihoo_v6
 +
 +define Device/zn_m2
 +	$(call Device/FitImage)
