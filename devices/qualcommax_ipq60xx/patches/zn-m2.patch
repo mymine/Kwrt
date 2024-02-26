@@ -395,6 +395,6 @@ index 7790992146a4e..fbabf6999c44f 100644
 -	qihoo,360v6)
 +	qihoo,360v6|\
 +	zn,m2)
- 		caldata_extract "0:art" 0x1000 0x20000
+ 		caldata_extract "0:art" 0x1000 0x10000
  		;;
  	redmi,ax5-jdcloud)
