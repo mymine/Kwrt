@@ -377,7 +377,7 @@ index 75f2be164125c..792fe14385e2a 100644
 @@ -19,7 +19,8 @@ ipq60xx_setup_interfaces()
  		ucidef_set_interfaces_lan_wan "lan1 lan2" "wan"
  		;;
- 	qihoo,360v6|\
+ 	redmi,ax5-*|\
 -	xiaomi,rm1800)
 +	xiaomi,rm1800|\
 +	zn,m2)
@@ -397,4 +397,4 @@ index 7790992146a4e..fbabf6999c44f 100644
 +	zn,m2)
  		caldata_extract "0:art" 0x1000 0x20000
  		;;
- 	esac
+ 	redmi,ax5-jdcloud)
