@@ -8,10 +8,10 @@
  	friendlyarm,nanopi-r2s|\
  	friendlyarm,nanopi-r4s|\
  	friendlyarm,nanopi-r4se|\
-@@ -100,6 +101,7 @@
- 		wan_mac=$(nanopi_r4s_get_mac wan)
- 		lan_mac=$(nanopi_r4s_get_mac lan)
- 		;;
+@@ -111,6 +112,7 @@
+ 		wan_mac=$(nanopi_get_mac wan 6-0053)
+ 		lan_mac=$(nanopi_get_mac lan 6-0053)
+  		;;
 +	friendlyarm,nanopi-r2c-plus|\
  	friendlyarm,nanopi-r5c|\
  	friendlyarm,nanopi-r5s|\
