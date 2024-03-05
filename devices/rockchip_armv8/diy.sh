@@ -9,9 +9,7 @@ rm -rf package/feeds/kiddin9/{quectel_Gobinet,quectel_MHI} devices/common/patche
 
 curl -sfL https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/pending-6.1/613-netfilter_optional_tcp_window_check.patch -o target/linux/generic/pending-6.1/613-netfilter_optional_tcp_window_check.patch
 
-rm -rf arm-trusted-firmware-rockchip
-
-rm -rf package/boot/uboot-rockchip 
+rm -rf package/boot/uboot-rockchip package/boot/arm-trusted-firmware-rockchip
 
 git_clone_path master https://github.com/coolsnowwolf/lede package/boot/uboot-rockchip
 git_clone_path master https://github.com/coolsnowwolf/lede package/boot/arm-trusted-firmware-rockchip-vendor
