@@ -204,18 +204,18 @@ index e892c6620a1ac..03e3e7fe5ee13 100644
 
 --- a/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 +++ b/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
-@@ -23,8 +23,13 @@
- 	xunlong,orangepi-r1-plus|\
+@@ -27,6 +27,11 @@
  	xunlong,orangepi-r1-plus-lts)
  		ucidef_set_interfaces_lan_wan 'eth1' 'eth0'
-+		;;
+ 		;;
 +	friendlyarm,nanopi-m4 | \
 +	friendlyarm,nanopi-neo4 | \
 +	som-rk3399 | cm3588)
 +		ucidef_set_interfaces_lan_wan 'wlan0' 'eth0'
++ 		;;
+ 	friendlyarm,nanopc-t6)
+ 		ucidef_set_interfaces_lan_wan 'eth1' 'eth2'
  		;;
- 	fastrhino,r66s|\
- 	firefly,rk3568-roc-pc|\
 
 --- a/target/linux/rockchip/armv8/base-files/etc/board.d/01_leds
 +++ b/target/linux/rockchip/armv8/base-files/etc/board.d/01_leds
