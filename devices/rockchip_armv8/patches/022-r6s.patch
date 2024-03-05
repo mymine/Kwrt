@@ -186,15 +186,24 @@ index b70a62c4c7426..c34d7277487be 100644
  
  load mmc ${devnum}:1 ${fdt_addr_r} rockchip.dtb
 diff --git a/target/linux/rockchip/patches-6.1/210-rockchip-rk356x-add-support-for-new-boards.patch b/target/linux/rockchip/patches-6.1/210-rockchip-rk356x-add-support-for-new-boards.patch
-index 371e3c9dd4b6e..71dd4d700825f 100644
+index 371e3c9dd4b6e..8395f09bff180 100644
 --- a/target/linux/rockchip/patches-6.1/210-rockchip-rk356x-add-support-for-new-boards.patch
 +++ b/target/linux/rockchip/patches-6.1/210-rockchip-rk356x-add-support-for-new-boards.patch
-@@ -94,3 +94,8 @@
- +dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-roc-pc.dtb
+@@ -1,6 +1,6 @@
+ --- a/arch/arm64/boot/dts/rockchip/Makefile
+ +++ b/arch/arm64/boot/dts/rockchip/Makefile
+-@@ -79,3 +79,18 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-so
++@@ -79,3 +79,24 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-so
+  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-bpi-r2-pro.dtb
+  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-evb1-v10.dtb
+  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-rock-3a.dtb
+@@ -19,3 +19,9 @@
  +dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-seewo-sv21.dtb
  +dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-t68m.dtb
-+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-nanopc-t6.dtb
-+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-orangepi-5-plus.dtb
-+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-orangepi-5.dtb
-+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-nanopi-r6c.dtb
-+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-nanopi-r6s.dtb
+ +dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-panther-x2.dtb
+++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-xgp.dtb
+++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-nanopc-t6.dtb
+++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-orangepi-5-plus.dtb
+++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-orangepi-5.dtb
+++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-nanopi-r6c.dtb
+++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-nanopi-r6s.dtb
