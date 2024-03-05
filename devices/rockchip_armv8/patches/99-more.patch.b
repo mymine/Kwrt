@@ -76,15 +76,10 @@
 --- a/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 +++ b/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 @@ -23,8 +23,15 @@
- 	sharevdi,h3399pc|\
- 	sharevdi,guangmiao-g4c|\
  	xunlong,orangepi-r1-plus|\
--	xunlong,orangepi-r1-plus-lts)
-+	xunlong,orangepi-r1-plus-lts|\
-+	friendlyarm,nanopc-t6)
+ 	xunlong,orangepi-r1-plus-lts)
  		ucidef_set_interfaces_lan_wan 'eth1' 'eth0'
 +		;;
-+	friendlyarm,nanopc-t4 | \
 +	friendlyarm,nanopi-m4 | \
 +	friendlyarm,nanopi-neo4 | \
 +	som-rk3399 | cm3588)
@@ -92,59 +87,6 @@
  		;;
  	fastrhino,r66s|\
  	firefly,rk3568-roc-pc|\
-@@ -48,10 +56,10 @@
- 	esac
- }
- 
--nanopi_r4s_get_mac()
-+nanopi_get_mac()
- {
- 	local interface=$1
--	local eeprom_path="/sys/bus/i2c/devices/2-0051/eeprom"
-+	local eeprom_path="/sys/bus/i2c/devices/$2/eeprom"
- 	local address
- 
- 	if [ -f "$eeprom_path" ]; then
-@@ -98,8 +106,12 @@
- 		;;
- 	friendlyarm,nanopi-r4s|\
- 	friendlyarm,nanopi-r4se)
--		wan_mac=$(nanopi_r4s_get_mac wan)
--		lan_mac=$(nanopi_r4s_get_mac lan)
-+		wan_mac=$(nanopi_get_mac wan 2-0051)
-+		lan_mac=$(nanopi_get_mac lan 2-0051)
-+		;;
-+	nanopi-r6s|nanopi-r6c|nanopc-t6)
-+		wan_mac=$(nanopi_get_mac wan 6-0053)
-+		lan_mac=$(nanopi_get_mac lan 6-0053)
- 		;;
- 	friendlyarm,nanopi-r2c-plus|\
- 	friendlyarm,nanopi-r5c|\
- 
--nanopi_r4s_get_mac()
-+nanopi_get_mac()
- {
- 	local interface=$1
--	local eeprom_path="/sys/bus/i2c/devices/2-0051/eeprom"
-+	local eeprom_path="/sys/bus/i2c/devices/$2/eeprom"
- 	local address
- 
- 	if [ -f "$eeprom_path" ]; then
-@@ -94,8 +99,12 @@ rockchip_setup_macs()
- 		;;
- 	friendlyarm,nanopi-r4s|\
- 	friendlyarm,nanopi-r4se)
--		wan_mac=$(nanopi_r4s_get_mac wan)
--		lan_mac=$(nanopi_r4s_get_mac lan)
-+		wan_mac=$(nanopi_get_mac wan 2-0051)
-+		lan_mac=$(nanopi_get_mac lan 2-0051)
-+		;;
-+	friendlyarm,nanopi-r6s|friendlyarm,nanopi-r6c|friendlyarm,nanopc-t6)
-+		wan_mac=$(nanopi_get_mac wan 6-0053)
-+		lan_mac=$(nanopi_get_mac lan 6-0053)
- 		;;
- 	friendlyarm,nanopi-r5c|\
- 	friendlyarm,nanopi-r5s|\
 
 --- a/target/linux/rockchip/armv8/base-files/etc/board.d/01_leds
 +++ b/target/linux/rockchip/armv8/base-files/etc/board.d/01_leds
