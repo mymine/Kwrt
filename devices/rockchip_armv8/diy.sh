@@ -7,10 +7,9 @@ rm -rf package/feeds/kiddin9/{quectel_Gobinet,quectel_MHI} devices/common/patche
 
 curl -sfL https://raw.githubusercontent.com/immortalwrt/immortalwrt/master/target/linux/generic/pending-6.1/613-netfilter_optional_tcp_window_check.patch -o target/linux/generic/pending-6.1/613-netfilter_optional_tcp_window_check.patch
 
-rm -rf package/boot/uboot-rockchip package/boot/arm-trusted-firmware-rockchip
+rm -rf package/boot
 
-git_clone_path master https://github.com/immortalwrt/immortalwrt package/boot/uboot-rockchip
-git_clone_path master https://github.com/immortalwrt/immortalwrt package/boot/arm-trusted-firmware-rockchip
+git_clone_path master https://github.com/immortalwrt/immortalwrt package/boot
 
 rm -rf target/linux/generic target/linux/rockchip/!(Makefile)
 
