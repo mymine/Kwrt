@@ -184,7 +184,7 @@ index e892c6620a1ac..03e3e7fe5ee13 100644
 
 --- a/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 +++ b/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
-@@ -23,8 +23,15 @@
+@@ -23,8 +23,13 @@
  	xunlong,orangepi-r1-plus|\
  	xunlong,orangepi-r1-plus-lts)
  		ucidef_set_interfaces_lan_wan 'eth1' 'eth0'
