@@ -9,12 +9,13 @@ rm -rf package/feeds/kiddin9/quectel_Gobinet devices/common/patches/kernel_versi
 
 curl -sfL https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/pending-6.1/613-netfilter_optional_tcp_window_check.patch -o target/linux/generic/pending-6.1/613-netfilter_optional_tcp_window_check.patch
 
-rm -rf package/devel/kselftests-bpf package/feeds/routing/batman-adv
+rm -rf package/devel/kselftests-bpf package/feeds/routing/batman-adv arm-trusted-firmware-rockchip
 
-rm -rf package/boot/uboot-rockchip
+rm -rf package/boot/uboot-rockchip 
 
 git_clone_path master https://github.com/coolsnowwolf/lede package/boot/uboot-rockchip
 git_clone_path master https://github.com/coolsnowwolf/lede package/boot/arm-trusted-firmware-rockchip-vendor
+git_clone_path master https://github.com/coolsnowwolf/lede package/boot/arm-trusted-firmware-rockchip
 
 rm -rf target/linux/generic target/linux/rockchip/!(Makefile)
 

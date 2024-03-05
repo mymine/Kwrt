@@ -13,7 +13,14 @@
  define Build/Configure
  	$(SED) 's,$$$$(PKG_BUILD_DIR),$(PKG_BUILD_DIR),g' $(PKG_BUILD_DIR)/trust.ini
  	$(SED) 's,$$$$(VARIANT),$(BUILD_VARIANT),g' $(PKG_BUILD_DIR)/trust.ini
-@@ -79,3 +85,4 @@ $(eval $(call BuildPackage,arm-trusted-firmware-rk3328))
+@@ -75,7 +81,11 @@ endef
+ define Package/arm-trusted-firmware-rk3568/install
+ endef
+ 
++define Package/arm-trusted-firmware-rk3588/install
++endef
++
+ $(eval $(call BuildPackage,arm-trusted-firmware-rk3328))
  $(eval $(call BuildPackage,arm-trusted-firmware-rk3399))
  $(eval $(call BuildPackage,arm-trusted-firmware-rk3566))
  $(eval $(call BuildPackage,arm-trusted-firmware-rk3568))
@@ -36,15 +43,16 @@ index e892c6620a1ac..03e3e7fe5ee13 100644
  define U-Boot/nanopi-r4s-rk3399
    BUILD_SUBTARGET:=armv8
    NAME:=NanoPi R4S
-@@ -309,6 +316,65 @@ define U-Boot/station-p2-rk3568
+@@ -309,6 +316,66 @@ define U-Boot/station-p2-rk3568
    DDR:=rk3568_ddr_1560MHz_v1.18.bin
  endef
  
 +define U-Boot/Default/rk3588
 +  BUILD_SUBTARGET:=armv8
 +  DEPENDS:=+PACKAGE_u-boot-$(1):arm-trusted-firmware-rk3588
-+  ATF:=$(RK3588_ATF)
-+  TPL:=$(RK3588_TPL)
++  PKG_BUILD_DEPENDS:=arm-trusted-firmware-rockchip-vendor
++  ATF:=rk3588_bl31_v1.41.elf
++  TPL:=rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.13.bin
 +endef
 +
 +define U-Boot/nanopc-t6-rk3588
