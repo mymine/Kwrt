@@ -29,12 +29,12 @@ Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
  2 files changed, 24 insertions(+)
 
 diff --git a/target/linux/rockchip/image/armv8.mk b/target/linux/rockchip/image/armv8.mk
-index 03feea502d1..ccd1469dd16 100644
+index 820d155e2e4ce..a9b151dbdeb80 100644
 --- a/target/linux/rockchip/image/armv8.mk
 +++ b/target/linux/rockchip/image/armv8.mk
-@@ -39,6 +39,15 @@ define Device/firefly_roc-rk3568-pc
+@@ -72,6 +72,16 @@ $(call Device/fastrhino_common)
  endef
- TARGET_DEVICES += firefly_roc-rk3568-pc
+ TARGET_DEVICES += fastrhino_r68s
  
 +define Device/friendlyarm_nanopc-t4
 +  DEVICE_VENDOR := FriendlyARM
@@ -46,9 +46,9 @@ index 03feea502d1..ccd1469dd16 100644
 +endef
 +TARGET_DEVICES += friendlyarm_nanopc-t4
 +
- define Device/friendlyarm_nanopi-r2c
+ define Device/friendlyarm_nanopi-neo3
    DEVICE_VENDOR := FriendlyARM
-   DEVICE_MODEL := NanoPi R2C
+   DEVICE_MODEL := NanoPi NEO3
 diff --git a/target/linux/rockchip/patches-6.1/100-rockchip-use-system-LED-for-OpenWrt.patch b/target/linux/rockchip/patches-6.1/100-rockchip-use-system-LED-for-OpenWrt.patch
 index d2764e34898..6a31ec3cf0f 100644
 --- a/target/linux/rockchip/patches-6.1/100-rockchip-use-system-LED-for-OpenWrt.patch
