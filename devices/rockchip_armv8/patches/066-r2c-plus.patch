@@ -17,6 +17,17 @@
  	friendlyarm,nanopi-r5s|\
  	sharevdi,guangmiao-g4c|\
 
+--- a/target/linux/rockchip/armv8/base-files/etc/board.d/01_leds
++++ b/target/linux/rockchip/armv8/base-files/etc/board.d/01_leds
+@@ -13,6 +13,7 @@
+ 	ucidef_set_led_netdev "wan" "WAN" "green:wan" "eth2"
+ 	;;
+ friendlyarm,nanopi-r2c|\
++friendlyarm,nanopi-r2c-plus|\
+ friendlyarm,nanopi-r2s|\
+ xunlong,orangepi-r1-plus|\
+ xunlong,orangepi-r1-plus-lts)
+
 --- a/package/boot/uboot-rockchip/Makefile
 +++ b/package/boot/uboot-rockchip/Makefile
 @@ -35,6 +35,17 @@

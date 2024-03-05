@@ -217,20 +217,6 @@ index e892c6620a1ac..03e3e7fe5ee13 100644
  		ucidef_set_interfaces_lan_wan 'eth1' 'eth2'
  		;;
 
---- a/target/linux/rockchip/armv8/base-files/etc/board.d/01_leds
-+++ b/target/linux/rockchip/armv8/base-files/etc/board.d/01_leds
-@@ -9,8 +9,8 @@ boardname="${board##*,}"
- board_config_update
- 
- case $board in
--friendlyarm,nanopi-r2c|\
--friendlyarm,nanopi-r2s|\
-+friendlyarm,nanopi-r2c*|\
-+friendlyarm,nanopi-r2s*|\
- xunlong,orangepi-r1-plus|\
- xunlong,orangepi-r1-plus-lts)
- 	ucidef_set_led_netdev "wan" "WAN" "$boardname:green:wan" "eth0"
-
 --- a/target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
 +++ b/target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
 @@ -34,8 +34,8 @@ firefly,rk3568-roc-pc)
