@@ -1,12 +1,12 @@
 #!/bin/bash
 
-rm -rf target/linux package/kernel package/boot package/firmware include/kernel-* package/network/config/wifi-scripts config/Config-images.in include/image-commands.mk
+rm -rf target/linux package/kernel package/boot package/firmware include/kernel-* package/network/config/wifi-scripts config/Config-images.in include/image*.mk
 
 mkdir new; cp -rf .git new/.git
 cd new
 git reset --hard origin/master
 
-cp -rf --parents target/linux package/kernel package/boot package/firmware include/kernel-* package/network/config/wifi-scripts config/Config-images.in include/image-commands.mk ../
+cp -rf --parents target/linux package/kernel package/boot package/firmware include/kernel-* package/network/config/wifi-scripts config/Config-images.in include/image*.mk ../
 cd -
 
 git_clone_path master https://github.com/coolsnowwolf/lede target/linux/generic/hack-6.1
