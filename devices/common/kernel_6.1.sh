@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf target/linux package/kernel package/boot package/firmware include/kernel-* package/network/config/wifi-scripts config/Config-images.in include/image*.mk
+rm -rf target/linux package/kernel package/boot package/firmware package/network/config/wifi-scripts
 
 mkdir new; cp -rf .git new/.git
 cd new
