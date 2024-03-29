@@ -198,7 +198,7 @@ jobs:
     - name: Apply patches
       run: |
         cd openwrt
-        cp -rn  devices/common/patches/* devices/${{matrix.target}}/patches/
+        cp -rn devices/common/patches devices/${{matrix.target}}/
           if [ -n "$(ls -A devices/${{matrix.target}}/*.bin.patch 2>/dev/null)" ]; then
             git apply devices/${{matrix.target}}/patches/*.bin.patch
           fi
