@@ -60,11 +60,6 @@ cd ../../
 
 rm -rf package/network/utils/xdp-tools package/feeds/kiddin9/quectel_MHI package/feeds/packages/v4l2loopback
 
-grep -q "1.8.8" package/network/utils/iptables/Makefile && {
-rm -rf package/network/utils/iptables
-git_clone_path openwrt-22.03 https://github.com/openwrt/openwrt package/network/utils/iptables
-}
-
 grep -q 'PKG_RELEASE:=9' package/libs/openssl/Makefile && {
 sh -c "curl -sfL https://github.com/openwrt/openwrt/commit/a48d0bdb77eb93f7fba6e055dace125c72755b6a.patch | patch -d './' -p1 --forward"
 }
