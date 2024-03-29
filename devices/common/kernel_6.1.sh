@@ -9,6 +9,8 @@ git reset --hard origin/master
 cp -rf --parents target/linux package/kernel package/boot package/firmware include/kernel-* package/network/config/wifi-scripts config/Config-images.in include/image*.mk scripts/ubinize-image.sh package/utils/bcm27xx-utils ../
 cd -
 
+cp -rf devices/common/patches/rootfstargz.patch.b devices/common/patches/rootfstargz.patch
+
 git_clone_path master https://github.com/coolsnowwolf/lede target/linux/generic/hack-6.1
 
 curl -sfL https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/pending-6.1/613-netfilter_optional_tcp_window_check.patch -o target/linux/generic/pending-6.1/613-netfilter_optional_tcp_window_check.patch
