@@ -6,7 +6,7 @@ mkdir new; cp -rf .git new/.git
 cd new
 git reset --hard origin/master
 
-cp -rf --parents target/linux package/kernel package/boot package/firmware include/kernel-* package/network/config/wifi-scripts config/Config-images.in include/image*.mk scripts/ubinize-image.sh ../
+cp -rf --parents target/linux package/kernel package/boot package/firmware include/kernel-* package/network/config/wifi-scripts config/Config-images.in include/image*.mk scripts/ubinize-image.sh package/utils/bcm27xx-utils ../
 cd -
 
 git_clone_path master https://github.com/coolsnowwolf/lede target/linux/generic/hack-6.1
