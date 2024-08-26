@@ -117,8 +117,7 @@
 +	if [[ "`echo "$(BUILD_PACKAGES)" | grep "usb"`" ]]; then \
 +		packages+="automount luci-app-diskman "; \
 +	fi; \
-+	$(OPKG) install $(BUILD_PACKAGES) luci-i18n-base-zh-cn luci-i18n-base-en; \
-+	$(OPKG) install $$packages || true
++	$(OPKG) install $(BUILD_PACKAGES) luci-i18n-base-zh-cn luci-i18n-base-en $$packages; \
 +	$(OPKG) install --force-maintainer --force-reinstall my-default-settings
  
  prepare_rootfs: FORCE
