@@ -104,7 +104,7 @@
  
  _call_manifest: FORCE
  	rm -rf $(TARGET_DIR)
-@@ -186,7 +212,17 @@ package_install: FORCE
+@@ -186,7 +212,16 @@ package_install: FORCE
  	@echo Installing packages...
  	$(OPKG) install $(firstword $(wildcard $(LINUX_DIR)/libc_*.ipk $(PACKAGE_DIR)/libc_*.ipk))
  	$(OPKG) install $(firstword $(wildcard $(LINUX_DIR)/kernel_*.ipk $(PACKAGE_DIR)/kernel_*.ipk))
