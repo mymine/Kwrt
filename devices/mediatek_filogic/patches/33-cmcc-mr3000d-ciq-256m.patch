@@ -15,38 +15,64 @@ diff --git a/package/boot/uboot-envtools/files/mediatek_filogic b/package/boot/u
 index 4eeb2b0196c4d9..43cb3830e7ed4a 100644
 --- a/package/boot/uboot-envtools/files/mediatek_filogic
 +++ b/package/boot/uboot-envtools/files/mediatek_filogic
-@@ -151,6 +151,7 @@ tenbay,wr3000k-gsw-emmc-nor)
- 		ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x10000" "0x10000"
- 	fi
+@@ -140,9 +140,12 @@
+ zyxel,ex5700-telenor)
+ 	ubootenv_add_uci_config "/dev/ubootenv" "0x0" "0x4000" "0x4000" "1"
  	;;
-+cmcc,mr3000d-ciq-256m|\
- tenbay,ac-2210e|\
- tenbay,ac-2205ex|\
- tenbay,wr3000k)
++cmcc,mr3000d-ciq-256m)
++	ubootenv_add_uci_config "/dev/mtd1" "0" "0x20000" "0x20000" 1
++	;;
+ esac
+ 
+ config_load ubootenv
+ config_foreach ubootenv_add_app_config
+ 
+ exit 0
 diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 index ccc988c3a8aad3..e9754ebc653756 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 +++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
-@@ -10,6 +10,7 @@ mediatek_setup_interfaces()
+@@ -9,6 +9,7 @@
+ 
  	case $board in
  	abt,asr3000|\
- 	abt,asr3000-ubootlayout|\
 +	cmcc,mr3000d-ciq-256m|\
- 	cmcc,rax3000m|\
- 	cmcc,rax3000m-emmc-ubootlayout|\
- 	cmcc,rax3000m-nand-ubootlayout|\
+ 	cmcc,rax3000m*|\
+ 	cmcc,xr30*|\
+ 	konka,komi-a31|\
 diff --git a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 index f6fc3d52cef14e..07a0eca1ba65d0 100755
 --- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 +++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
-@@ -314,6 +314,7 @@ platform_pre_upgrade() {
- 	xiaomi,redmi-router-ax6000-stock)
+@@ -214,7 +214,19 @@
+ 		;;
+ 	esac
+ }
++
++tenbay_dualboot_fixup()
++{
++	[ "$(rootfs_type)" = "tmpfs" ] || return 0
+ 
++	if ! fw_printenv -n boot_from &>/dev/null; then
++		echo "unable to read uboot-env"
++		return 1
++	fi
++
++	fw_setenv boot_from ubi
++}
++
+ platform_pre_upgrade() {
+ 	local board=$(board_name)
+ 
+@@ -229,5 +241,8 @@
+ 	xiaomi,redmi-router-ax6000)
  		xiaomi_initial_setup
  		;;
-+	cmcc,mr3000d-ciq-256m|\
- 	tenbay,ac-2210e|\
- 	tenbay,ac-2205ex|\
- 	tenbay,wr3000k)
++	cmcc,mr3000d-ciq-256m)
++		tenbay_dualboot_fixup
++		;;
+ 	esac
+ }
 diff --git a/target/linux/mediatek/image/filogic.mk b/target/linux/mediatek/image/filogic.mk
 index 694b5a35b6d89a..d9967c12a965b7 100644
 --- a/target/linux/mediatek/image/filogic.mk
