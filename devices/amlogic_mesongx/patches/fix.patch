@@ -31,3 +31,69 @@
 +	$(LINUX_DIR)/drivers/video/fbdev/core/fb_io_fops.ko@eq6.6
    AUTOLOAD:=$(call AutoLoad,06,fb font)
  endef
+ 
+@@ -477,7 +477,7 @@ define KernelPackage/drm-amdgpu
+ 	CONFIG_DEBUG_KERNEL_DC=n
+   FILES:=$(LINUX_DIR)/drivers/gpu/drm/amd/amdgpu/amdgpu.ko \
+ 	$(LINUX_DIR)/drivers/gpu/drm/scheduler/gpu-sched.ko \
+-	$(LINUX_DIR)/drivers/gpu/drm/amd/amdxcp/amdxcp.ko
++	$(LINUX_DIR)/drivers/gpu/drm/amd/amdxcp/amdxcp.ko@ge6.5
+   AUTOLOAD:=$(call AutoProbe,amdgpu)
+ endef
+ 
+@@ -810,10 +810,10 @@ $(eval $(call KernelPackage,video-pwc))
+ define KernelPackage/video-uvc
+   TITLE:=USB Video Class (UVC) support
+   DEPENDS:=@USB_SUPPORT +kmod-usb-core +kmod-video-videobuf2 +kmod-input-core
+-  KCONFIG:= CONFIG_USB_VIDEO_CLASS CONFIG_UVC_COMMON
++  KCONFIG:= CONFIG_USB_VIDEO_CLASS CONFIG_UVC_COMMON@ge6.3
+   FILES:=$(LINUX_DIR)/drivers/media/$(V4L2_USB_DIR)/uvc/uvcvideo.ko \
+-	$(LINUX_DIR)/drivers/media/common/uvc.ko
+-  AUTOLOAD:=$(call AutoProbe,uvc uvcvideo)
++	$(LINUX_DIR)/drivers/media/common/uvc.ko@ge6.3
++  AUTOLOAD:=$(call AutoProbe,uvc@ge6.3 uvcvideo)
+   $(call AddDepends/camera)
+ endef
+ 
+
+--- a/package/kernel/linux/modules/crypto.mk
++++ b/package/kernel/linux/modules/crypto.mk
+@@ -311,7 +311,7 @@ define KernelPackage/crypto-gf128
+   KCONFIG:= \
+ 	CONFIG_CRYPTO_GF128MUL \
+ 	CONFIG_CRYPTO_LIB_GF128MUL
+-  FILES:=$(LINUX_DIR)/lib/crypto/gf128mul.ko
++  FILES:=$(LINUX_DIR)/lib/crypto/gf128mul.ko@ge6.2
+   AUTOLOAD:=$(call AutoLoad,09,gf128mul)
+   $(call AddDepends/crypto)
+ endef
+@@ -887,7 +887,7 @@ define KernelPackage/crypto-rsa
+   KCONFIG:= CONFIG_CRYPTO_RSA
+   HIDDEN:=1
+   FILES:= \
+-	$(LINUX_DIR)/lib/crypto/mpi/mpi.ko \
++	$(LINUX_DIR)/lib/crypto/mpi/mpi.ko@ge6.5 \
+ 	$(LINUX_DIR)/crypto/akcipher.ko \
+ 	$(LINUX_DIR)/crypto/rsa_generic.ko
+   AUTOLOAD:=$(call AutoLoad,10,rsa_generic)
+
+--- a/package/kernel/linux/modules/netdevices.mk
++++ b/package/kernel/linux/modules/netdevices.mk
+@@ -450,7 +450,7 @@ define KernelPackage/phy-realtek
+    KCONFIG:=CONFIG_REALTEK_PHY \
+     CONFIG_REALTEK_PHY_HWMON=y
+    DEPENDS:=+kmod-libphy +kmod-hwmon-core
+-   FILES:=$(LINUX_DIR)/drivers/net/phy/realtek/realtek.ko
++   FILES:=$(LINUX_DIR)/drivers/net/phy/realtek/realtek.ko@ge6.6
+    AUTOLOAD:=$(call AutoLoad,18,realtek,1)
+ endef
+ 
+@@ -974,7 +974,7 @@ define KernelPackage/r8169
+   DEPENDS:=@PCI_SUPPORT +kmod-mii +r8169-firmware +kmod-phy-realtek +kmod-mdio-devres
+   KCONFIG:= \
+     CONFIG_R8169 \
+-    CONFIG_R8169_LEDS=y
++    CONFIG_R8169_LEDS=y@ge6.6
+   FILES:=$(LINUX_DIR)/drivers/net/ethernet/realtek/r8169.ko
+   AUTOLOAD:=$(call AutoProbe,r8169,1)
+ endef
