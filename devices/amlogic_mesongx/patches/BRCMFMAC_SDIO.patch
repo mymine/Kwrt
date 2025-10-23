@@ -8,3 +8,26 @@
  		default y if TARGET_bcm27xx
  		default y if TARGET_imx_cortexa7
  		default y if TARGET_starfive
+
+--- a/target/imagebuilder/Makefile
++++ b/target/imagebuilder/Makefile
+@@ -103,7 +103,7 @@ endif
+ 		mkdir -p $(PKG_BUILD_DIR)/target/linux/feeds; \
+ 		$(CP) -L $(TOPDIR)/target/linux/feeds/$(BOARD) $(PKG_BUILD_DIR)/target/linux/feeds; \
+ 	else \
+-		$(CP) -L $(TOPDIR)/target/linux/$(BOARD) $(PKG_BUILD_DIR)/target/linux; \
++		$(CP) $(TOPDIR)/target/linux/$(BOARD) $(PKG_BUILD_DIR)/target/linux; \
+ 	fi
+ 	if [ -d $(TOPDIR)/staging_dir/host/lib/grub ]; then \
+ 		$(CP) $(TOPDIR)/staging_dir/host/lib/grub/ $(PKG_BUILD_DIR)/staging_dir/host/lib; \
+
+--- a/package/kernel/linux/modules/video.mk
++++ b/package/kernel/linux/modules/video.mk
+@@ -129,7 +129,7 @@ define KernelPackage/fb
+ 	CONFIG_VT_HW_CONSOLE_BINDING=y
+   FILES:=$(LINUX_DIR)/drivers/video/fbdev/core/fb.ko \
+ 	$(LINUX_DIR)/lib/fonts/font.ko \
+-	$(LINUX_DIR)/drivers/video/fbdev/core/fb_io_fops.ko
++	$(LINUX_DIR)/drivers/video/fbdev/core/fb_io_fops.ko@eq6.6
+   AUTOLOAD:=$(call AutoLoad,06,fb font)
+ endef
